@@ -45,9 +45,201 @@ PasteImmediate(symbol) {
     PasteText symbol
 }
 
+global SymbolMode := ""
+global SuperscriptChars := Map(
+    "0", "⁰",
+    "1", "¹",
+    "2", "²",
+    "3", "³",
+    "4", "⁴",
+    "5", "⁵",
+    "6", "⁶",
+    "7", "⁷",
+    "8", "⁸",
+    "9", "⁹",
+    "+", "⁺",
+    "-", "⁻",
+    "=", "⁼",
+    "(", "⁽",
+    ")", "⁾",
+    "a", "ᵃ",
+    "b", "ᵇ",
+    "c", "ᶜ",
+    "d", "ᵈ",
+    "e", "ᵉ",
+    "f", "ᶠ",
+    "g", "ᵍ",
+    "h", "ʰ",
+    "i", "ⁱ",
+    "j", "ʲ",
+    "k", "ᵏ",
+    "l", "ˡ",
+    "m", "ᵐ",
+    "n", "ⁿ",
+    "o", "ᵒ",
+    "p", "ᵖ",
+    "r", "ʳ",
+    "s", "ˢ",
+    "t", "ᵗ",
+    "u", "ᵘ",
+    "v", "ᵛ",
+    "w", "ʷ",
+    "x", "ˣ",
+    "y", "ʸ",
+    "z", "ᶻ"
+)
+global SubscriptChars := Map(
+    "0", "₀",
+    "1", "₁",
+    "2", "₂",
+    "3", "₃",
+    "4", "₄",
+    "5", "₅",
+    "6", "₆",
+    "7", "₇",
+    "8", "₈",
+    "9", "₉",
+    "+", "₊",
+    "-", "₋",
+    "=", "₌",
+    "(", "₍",
+    ")", "₎",
+    "a", "ₐ",
+    "e", "ₑ",
+    "h", "ₕ",
+    "i", "ᵢ",
+    "j", "ⱼ",
+    "k", "ₖ",
+    "l", "ₗ",
+    "m", "ₘ",
+    "n", "ₙ",
+    "o", "ₒ",
+    "p", "ₚ",
+    "r", "ᵣ",
+    "s", "ₛ",
+    "t", "ₜ",
+    "u", "ᵤ",
+    "v", "ᵥ",
+    "x", "ₓ"
+)
+
+ToggleSymbolMode(mode) {
+    global SymbolMode
+    SymbolMode := SymbolMode = mode ? "" : mode
+    ShowSymbolMode()
+}
+
+SetSymbolMode(mode) {
+    global SymbolMode
+    SymbolMode := mode
+    ShowSymbolMode()
+}
+
+ShowSymbolMode() {
+    global SymbolMode
+
+    if SymbolMode = "super" {
+        ToolTip "Superscript mode"
+    } else if SymbolMode = "sub" {
+        ToolTip "Subscript mode"
+    } else {
+        ToolTip "Normal text"
+    }
+
+    SetTimer ClearSymbolModeTip, -800
+}
+
+ClearSymbolModeTip() {
+    ToolTip
+}
+
+ModeType(char) {
+    global SymbolMode, SuperscriptChars, SubscriptChars
+    chars := SymbolMode = "super" ? SuperscriptChars : SubscriptChars
+    PasteImmediate chars.Has(char) ? chars[char] : char
+}
+
+; Google Docs-style typing modes.
+^.::ToggleSymbolMode "super"
+^,::ToggleSymbolMode "sub"
+
+#HotIf SymbolMode != ""
+Esc::SetSymbolMode ""
+0::ModeType "0"
+1::ModeType "1"
+2::ModeType "2"
+3::ModeType "3"
+4::ModeType "4"
+5::ModeType "5"
+6::ModeType "6"
+7::ModeType "7"
+8::ModeType "8"
+9::ModeType "9"
++0::ModeType ")"
++9::ModeType "("
+-::ModeType "-"
++=::ModeType "+"
+=::ModeType "="
+a::ModeType "a"
+b::ModeType "b"
+c::ModeType "c"
+d::ModeType "d"
+e::ModeType "e"
+f::ModeType "f"
+g::ModeType "g"
+h::ModeType "h"
+i::ModeType "i"
+j::ModeType "j"
+k::ModeType "k"
+l::ModeType "l"
+m::ModeType "m"
+n::ModeType "n"
+o::ModeType "o"
+p::ModeType "p"
+q::ModeType "q"
+r::ModeType "r"
+s::ModeType "s"
+t::ModeType "t"
+u::ModeType "u"
+v::ModeType "v"
+w::ModeType "w"
+x::ModeType "x"
+y::ModeType "y"
+z::ModeType "z"
++a::ModeType "A"
++b::ModeType "B"
++c::ModeType "C"
++d::ModeType "D"
++e::ModeType "E"
++f::ModeType "F"
++g::ModeType "G"
++h::ModeType "H"
++i::ModeType "I"
++j::ModeType "J"
++k::ModeType "K"
++l::ModeType "L"
++m::ModeType "M"
++n::ModeType "N"
++o::ModeType "O"
++p::ModeType "P"
++q::ModeType "Q"
++r::ModeType "R"
++s::ModeType "S"
++t::ModeType "T"
++u::ModeType "U"
++v::ModeType "V"
++w::ModeType "W"
++x::ModeType "X"
++y::ModeType "Y"
++z::ModeType "Z"
+#HotIf
+
 ; CS40 math-symbol hotstrings.
 ; Type the trigger, then press Space/Enter/punctuation to replace it.
 ; Example: /neg Space -> ¬
+; Case-sensitive so uppercase commands like /Sigma and /Ra are not shadowed
+; by lowercase commands like /sigma and /ra.
+#Hotstring C
 
 ; Logic
 :X?:/neg::PasteSymbol "¬"
@@ -174,6 +366,7 @@ PasteImmediate(symbol) {
 :X*?:/^8::PasteImmediate "⁸"
 :X*?:/^9::PasteImmediate "⁹"
 :X*?:/^n::PasteImmediate "ⁿ"
+:X*?:/^i::PasteImmediate "ⁱ"
 :X*?:/^-::PasteImmediate "⁻"
 :X*?:/^+::PasteImmediate "⁺"
 
