@@ -120,7 +120,8 @@ global SubscriptChars := Map(
     "t", "ₜ",
     "u", "ᵤ",
     "v", "ᵥ",
-    "x", "ₓ"
+    "x", "ₓ",
+    "y", "ᵧ"
 )
 
 ToggleSymbolMode(mode) {
@@ -381,11 +382,24 @@ z::ModeType "z"
 :X*?:/_7::PasteImmediate "₇"
 :X*?:/_8::PasteImmediate "₈"
 :X*?:/_9::PasteImmediate "₉"
-:X*?:/_n::PasteImmediate "ₙ"
-:X*?:/_x::PasteImmediate "ₓ"
+:X*?:/_a::PasteImmediate "ₐ"
+:X*?:/_e::PasteImmediate "ₑ"
+:X*?:/_h::PasteImmediate "ₕ"
 :X*?:/_i::PasteImmediate "ᵢ"
 :X*?:/_j::PasteImmediate "ⱼ"
 :X*?:/_k::PasteImmediate "ₖ"
+:X*?:/_l::PasteImmediate "ₗ"
+:X*?:/_m::PasteImmediate "ₘ"
+:X*?:/_n::PasteImmediate "ₙ"
+:X*?:/_o::PasteImmediate "ₒ"
+:X*?:/_p::PasteImmediate "ₚ"
+:X*?:/_r::PasteImmediate "ᵣ"
+:X*?:/_s::PasteImmediate "ₛ"
+:X*?:/_t::PasteImmediate "ₜ"
+:X*?:/_u::PasteImmediate "ᵤ"
+:X*?:/_v::PasteImmediate "ᵥ"
+:X*?:/_x::PasteImmediate "ₓ"
+:X*?:/_y::PasteImmediate "ᵧ"
 
 ; Quick proof words and templates
 :X?:/pf::PasteSymbol "Proof."
