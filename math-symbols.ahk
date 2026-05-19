@@ -244,6 +244,7 @@ z::ModeType "z"
 ; Case-sensitive so uppercase commands like /Sigma and /Ra are not shadowed
 ; by lowercase commands like /sigma and /ra.
 #Hotstring C
+#Hotstring EndChars ()[]{}':;"/\,.?!`n`s`t
 
 ; Logic
 :X?:/neg::PasteSymbol "¬"
@@ -321,8 +322,8 @@ z::ModeType "z"
 :X?:/pm::PasteSymbol "±"
 :X?:/mp::PasteSymbol "∓"
 :X?:/cdot::PasteSymbol "·"
-:X?:/--::PasteSymbol "–"
 :X?:/---::PasteSymbol "—"
+:X?:/--::PasteSymbol "–"
 :X?:/divides::PasteSymbol "∣"
 :X?:/ndivides::PasteSymbol "∤"
 :X?:/sqrt::PasteSymbol "√"
