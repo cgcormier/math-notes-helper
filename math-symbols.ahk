@@ -38,7 +38,8 @@ PasteText(text) {
 }
 
 PasteSymbol(symbol) {
-    PasteText symbol A_EndChar
+    endChar := A_EndChar = "`t" ? "" : A_EndChar
+    PasteText symbol endChar
 }
 
 PasteImmediate(symbol) {
@@ -59,6 +60,7 @@ global SuperscriptChars := Map(
     "9", "⁹",
     "+", "⁺",
     "-", "⁻",
+    "/", "ᐟ",
     "=", "⁼",
     "(", "⁽",
     ")", "⁾",
@@ -179,6 +181,7 @@ Esc::SetSymbolMode ""
 +0::ModeType ")"
 +9::ModeType "("
 -::ModeType "-"
+/::ModeType "/"
 +=::ModeType "+"
 =::ModeType "="
 a::ModeType "a"
@@ -318,10 +321,14 @@ z::ModeType "z"
 :X?:/pm::PasteSymbol "±"
 :X?:/mp::PasteSymbol "∓"
 :X?:/cdot::PasteSymbol "·"
+:X?:/--::PasteSymbol "–"
+:X?:/---::PasteSymbol "—"
 :X?:/divides::PasteSymbol "∣"
 :X?:/ndivides::PasteSymbol "∤"
 :X?:/sqrt::PasteSymbol "√"
 :X?:/inf::PasteSymbol "∞"
+:X?:/int::PasteSymbol "∫"
+:X?:/integral::PasteSymbol "∫"
 
 ; Number systems and common constants
 :X?:/N::PasteSymbol "ℕ"
@@ -329,6 +336,7 @@ z::ModeType "z"
 :X?:/Q::PasteSymbol "ℚ"
 :X?:/R::PasteSymbol "ℝ"
 :X?:/C::PasteSymbol "ℂ"
+:X?:/L::PasteSymbol "ℒ"
 :X?:/pi::PasteSymbol "π"
 :X?:/theta::PasteSymbol "θ"
 :X?:/alpha::PasteSymbol "α"
@@ -338,8 +346,13 @@ z::ModeType "z"
 :X?:/epsilon::PasteSymbol "ε"
 :X?:/lambda::PasteSymbol "λ"
 :X?:/mu::PasteSymbol "μ"
+:X?:/rho::PasteSymbol "ρ"
 :X?:/sigma::PasteSymbol "σ"
 :X?:/Sigma::PasteSymbol "Σ"
+:X?:/grad::PasteSymbol "∇"
+:X?:/phi::PasteSymbol "φ"
+:X?:/par::PasteSymbol "∂"
+:X?:/partial::PasteSymbol "∂"
 
 ; Arrows
 :X?:/left::PasteSymbol "←"
