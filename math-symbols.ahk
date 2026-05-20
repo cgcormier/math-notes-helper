@@ -125,6 +125,18 @@ global SubscriptChars := Map(
     "x", "ₓ",
     "y", "ᵧ"
 )
+; Unicode has no single-codepoint subscripts for these keyboard characters.
+global UnsupportedSubscriptChars := Map(
+    "/", true,
+    "b", true,
+    "c", true,
+    "d", true,
+    "f", true,
+    "g", true,
+    "q", true,
+    "w", true,
+    "z", true
+)
 
 ToggleSymbolMode(mode) {
     global SymbolMode
@@ -156,10 +168,24 @@ ClearSymbolModeTip() {
     ToolTip
 }
 
+ShowUnsupportedSubscript(char) {
+    ToolTip "No Unicode subscript: " char
+    SetTimer ClearSymbolModeTip, -800
+}
+
 ModeType(char) {
-    global SymbolMode, SuperscriptChars, SubscriptChars
+    global SymbolMode, SuperscriptChars, SubscriptChars, UnsupportedSubscriptChars
     chars := SymbolMode = "super" ? SuperscriptChars : SubscriptChars
-    PasteImmediate chars.Has(char) ? chars[char] : char
+    if chars.Has(char) {
+        PasteImmediate chars[char]
+        return
+    }
+
+    if SymbolMode = "sub" && UnsupportedSubscriptChars.Has(char) {
+        ShowUnsupportedSubscript char
+    }
+
+    PasteImmediate char
 }
 
 ; Google Docs-style typing modes.
