@@ -66,8 +66,10 @@ def parse_hotstrings():
 
 class MathSymbolModeTests(unittest.TestCase):
     def test_superscript_mode_map(self):
+        superscript_chars = parse_string_map("SuperscriptChars")
+
         self.assertEqual(
-            parse_string_map("SuperscriptChars"),
+            superscript_chars,
             {
                 "0": "⁰",
                 "1": "¹",
@@ -112,6 +114,7 @@ class MathSymbolModeTests(unittest.TestCase):
                 "z": "ᶻ",
             },
         )
+        self.assertEqual(set(string.ascii_lowercase) - set(superscript_chars), {"q"})
 
     def test_subscript_mode_map_and_known_unicode_gaps(self):
         subscript_chars = parse_string_map("SubscriptChars")
